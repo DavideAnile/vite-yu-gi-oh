@@ -39,7 +39,7 @@
     align-items: center;
     padding: 10px;
     height: 100px;
-    background-color: grey;
+    background-color: rgba(0, 0, 0, 0.4);
 
     .logo{
         height: 100%;
