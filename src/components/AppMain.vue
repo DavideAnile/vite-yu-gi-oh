@@ -1,8 +1,11 @@
 <script>
+import AppMainCard from "./AppMainCard.vue"
+import AppMainSearch from "./AppMainSearch.vue"
+
+
 import axios from "axios"
 import {store} from "../store.js"
 
-import AppMainCard from "./AppMainCard.vue"
 
  export default {
     data(){
@@ -13,21 +16,36 @@ import AppMainCard from "./AppMainCard.vue"
     },
 
     created(){
-        axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=50&offset=0').then((res) => {
+        axios.get(this.store.apiCall).then((res) => {
             this.store.cards = res.data.data
-            console.log(store.cards)
+            
         })
 
     },
 
     components : {
         AppMainCard,
+        AppMainSearch
+    },
+
+    methods : {
+        search(){
+            let newApiCall = (this.store.apiCall + this.store.apiQuery + this.store.cardName)
+
+            axios.get(newApiCall).then((res) =>{
+                
+                this.store.cards = res.data.data
+            })
+        }
     }
  }
 </script>
 
 <template>
     <section>
+
+        <AppMainSearch @searchCard="search()"></AppMainSearch>
+
         <div class="container">
             
             <AppMainCard v-for="card in store.cards" :card="card"></AppMainCard>
@@ -40,7 +58,7 @@ import AppMainCard from "./AppMainCard.vue"
 <style lang="scss" scoped>
 
 section{
-    background: linear-gradient(0.25turn, #094b68, #836e40, #9e2379);
+    background: linear-gradient(0.25turn, #552635, #948981, #52389b);
     
     
     

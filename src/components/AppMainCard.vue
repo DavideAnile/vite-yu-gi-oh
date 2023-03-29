@@ -21,9 +21,13 @@
                 return 'trap'
             } else if (this.card.frameType == 'effect'){
                 return 'effect'
-            } else {
+            } else if(this.card.frameType == 'xyz'){
+                return 'xyz'
+            } else if (this.card.frameType == 'fusion'){
                 return 'fusion'
             }
+
+        
 
         }
     }
@@ -133,6 +137,10 @@
         &.fusion{
             background-color: #baaec7;
         }
+
+        &.xyz{
+            background-color: rgba(241, 229, 229, 0.164);
+        }
         
         
     }
@@ -158,6 +166,10 @@
 
    .fusion{
     background-color: #59208f;
+   }
+
+   .xyz{
+    background-color:  rgb(14, 11, 11);
    }
    
 
