@@ -34,6 +34,11 @@ import { store } from '../store.js';
         outline: none;
         border: 1px solid transparent;
         border-radius: 5px;
+        padding: 4px 8px;
+    }
+
+    button{
+        padding: 2px;
     }
 }
 

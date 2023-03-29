@@ -17,9 +17,11 @@ import {store} from "../store.js"
 
     created(){
         axios.get(this.store.apiCall).then((res) => {
-            this.store.cards = res.data.data
+            this.store.cards = res.data.data;
             
-        })
+        }).catch(Error) 
+            
+
 
     },
 
@@ -35,7 +37,13 @@ import {store} from "../store.js"
             axios.get(newApiCall).then((res) =>{
                 
                 this.store.cards = res.data.data
+            }).catch((err) => {
+
+                alert('Nessuna carta trovata!')
+                this.store.cardName = ''
             })
+
+            
         }
     }
  }
@@ -48,8 +56,8 @@ import {store} from "../store.js"
 
         <div class="container">
             
+            
             <AppMainCard v-for="card in store.cards" :card="card"></AppMainCard>
-    
         </div>
 
     </section>
