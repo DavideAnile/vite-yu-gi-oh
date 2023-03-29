@@ -12,14 +12,18 @@ import {store} from "../store.js"
         return{
 
             store,
+
+            isLoading : true
         }
     },
 
     created(){
         axios.get(this.store.apiCall).then((res) => {
             this.store.cards = res.data.data;
+
+            this.isLoading = false
             
-        }).catch(Error) 
+        })
             
 
 
@@ -32,14 +36,18 @@ import {store} from "../store.js"
 
     methods : {
         search(){
+            
             let newApiCall = (this.store.apiCall + this.store.apiQuery + this.store.cardName)
 
             axios.get(newApiCall).then((res) =>{
-                
+               
+                this.store.cardFound = true
                 this.store.cards = res.data.data
+                this.store.cardName = ''
+
             }).catch((err) => {
 
-                alert('Nessuna carta trovata!')
+                this.store.cardFound = false
                 this.store.cardName = ''
             })
 
@@ -53,11 +61,13 @@ import {store} from "../store.js"
     <section>
 
         <AppMainSearch @searchCard="search()"></AppMainSearch>
+        
+        <div class="loading" v-if="isLoading">Caricamento delle carte...</div>
 
-        <div class="container">
+        <div class="container" v-else>
             
-            
-            <AppMainCard v-for="card in store.cards" :card="card"></AppMainCard>
+            <div v-if="this.store.cardFound == false " class="not-found">Nessuna carta trovata</div>
+            <AppMainCard v-else v-for="card in store.cards" :card="card"></AppMainCard>
         </div>
 
     </section>
@@ -79,8 +89,27 @@ section{
     gap: 40px;
     width: 1500px;
     margin:  auto;
-    
-    
+
+    .not-found{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
 }
+    
+.loading{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        text-transform: uppercase;
+    }    
+    
 
 </style>
